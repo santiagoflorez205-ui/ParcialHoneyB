@@ -1,6 +1,7 @@
 import Header from './components/Header';
 import Hero from './components/Hero';
 import ProductSection from './components/ProductSection';
+import QuizFinder from './components/QuizFinder';
 import Benefits from './components/Benefits';
 import About from './components/About';
 import CartDrawer from './components/CartDrawer';
@@ -14,6 +15,7 @@ function App() {
       <main>
         <Hero />
         <ProductSection />
+        <QuizFinder />
         <Benefits />
         <About />
       </main>

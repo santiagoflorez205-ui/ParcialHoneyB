@@ -82,7 +82,7 @@
 }
 
 .cart-drawer__empty p {
-  font-family: 'Playfair Display', serif;
+  font-family: 'Poppins', sans-serif;
   font-size: 1.2rem;
   font-weight: 600;
   color: var(--espresso);
@@ -127,7 +127,7 @@
 }
 
 .cart-item__name {
-  font-family: 'Playfair Display', serif;
+  font-family: 'Poppins', sans-serif;
   font-size: 0.9rem;
   font-weight: 600;
   color: var(--espresso);
@@ -241,7 +241,7 @@
   border-top: 2px solid var(--espresso);
   margin-top: 8px;
   padding-top: 12px;
-  font-family: 'Playfair Display', serif;
+  font-family: 'Poppins', sans-serif;
   font-size: 1.15rem;
   font-weight: 700;
   color: var(--espresso);
