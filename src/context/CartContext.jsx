@@ -1,6 +1,25 @@
-import { createContext, useContext, useReducer, useCallback } from 'react';
+import { createContext, useContext, useReducer, useCallback, useEffect } from 'react';
 
 const CartContext = createContext();
+
+const STORAGE_KEY = 'honeybee-cart';
+
+function loadCart() {
+  try {
+    const saved = localStorage.getItem(STORAGE_KEY);
+    if (saved) {
+      const parsed = JSON.parse(saved);
+      return parsed.items || [];
+    }
+  } catch { /* ignore */ }
+  return [];
+}
+
+function saveCart(items) {
+  try {
+    localStorage.setItem(STORAGE_KEY, JSON.stringify({ items }));
+  } catch { /* ignore */ }
+}
 
 const cartReducer = (state, action) => {
   switch (action.type) {
@@ -57,9 +76,13 @@ const cartReducer = (state, action) => {
 
 export function CartProvider({ children }) {
   const [state, dispatch] = useReducer(cartReducer, {
-    items: [],
+    items: loadCart(),
     isOpen: false,
   });
+
+  useEffect(() => {
+    saveCart(state.items);
+  }, [state.items]);
 
   const addItem = useCallback((product) => {
     dispatch({ type: 'ADD_ITEM', payload: product });
