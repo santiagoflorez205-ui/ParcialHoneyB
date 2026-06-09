@@ -1,0 +1,235 @@
+.hero {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  overflow: hidden;
+  background: linear-gradient(165deg, var(--cream) 0%, var(--cream-dark) 40%, rgba(232, 168, 23, 0.06) 100%);
+  padding: 120px 32px 80px;
+}
+
+.hero__bg-pattern {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  overflow: hidden;
+}
+
+.hero__hexagon {
+  position: absolute;
+  width: 120px;
+  height: 120px;
+  background: rgba(232, 168, 23, 0.04);
+  clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%);
+  animation: float 8s ease-in-out infinite;
+}
+
+.hero__hexagon:nth-child(1) { top: 10%; left: 5%; width: 80px; height: 80px; }
+.hero__hexagon:nth-child(2) { top: 60%; left: 15%; width: 60px; height: 60px; }
+.hero__hexagon:nth-child(3) { top: 20%; right: 10%; width: 100px; height: 100px; }
+.hero__hexagon:nth-child(4) { bottom: 15%; right: 5%; width: 70px; height: 70px; }
+.hero__hexagon:nth-child(5) { top: 45%; left: 45%; width: 50px; height: 50px; }
+.hero__hexagon:nth-child(6) { bottom: 30%; left: 35%; width: 90px; height: 90px; }
+
+.hero__content {
+  max-width: 1200px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 80px;
+  align-items: center;
+}
+
+.hero__text {
+  animation: fadeInUp 0.8s ease;
+}
+
+.hero__tag {
+  display: inline-block;
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  color: var(--honey-dark);
+  background: rgba(232, 168, 23, 0.1);
+  padding: 6px 18px;
+  border-radius: 30px;
+  margin-bottom: 24px;
+}
+
+.hero__title {
+  font-size: 3.8rem;
+  font-weight: 800;
+  color: var(--espresso);
+  margin-bottom: 24px;
+  letter-spacing: -1px;
+}
+
+.hero__title-accent {
+  color: var(--honey);
+  font-style: italic;
+}
+
+.hero__description {
+  font-size: 1.1rem;
+  color: var(--espresso-light);
+  max-width: 480px;
+  margin-bottom: 36px;
+  line-height: 1.8;
+}
+
+.hero__cta {
+  display: flex;
+  gap: 16px;
+  margin-bottom: 48px;
+}
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 14px 32px;
+  border-radius: var(--radius-xl);
+  font-size: 0.95rem;
+  font-weight: 600;
+  transition: all var(--transition);
+  letter-spacing: 0.3px;
+}
+
+.btn--primary {
+  background: var(--honey);
+  color: var(--white);
+  box-shadow: 0 4px 20px rgba(232, 168, 23, 0.35);
+}
+
+.btn--primary:hover {
+  background: var(--honey-dark);
+  transform: translateY(-2px);
+  box-shadow: 0 8px 30px rgba(232, 168, 23, 0.45);
+}
+
+.btn--ghost {
+  background: transparent;
+  color: var(--espresso);
+  border: 2px solid var(--espresso);
+}
+
+.btn--ghost:hover {
+  background: var(--espresso);
+  color: var(--cream);
+  transform: translateY(-2px);
+}
+
+.hero__stats {
+  display: flex;
+  align-items: center;
+  gap: 28px;
+}
+
+.hero__stat {
+  display: flex;
+  flex-direction: column;
+}
+
+.hero__stat strong {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.8rem;
+  color: var(--honey);
+}
+
+.hero__stat span {
+  font-size: 0.8rem;
+  color: var(--warm-gray);
+  letter-spacing: 0.5px;
+}
+
+.hero__stat-divider {
+  width: 1px;
+  height: 40px;
+  background: var(--amber);
+  opacity: 0.3;
+}
+
+.hero__image {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  animation: fadeInUp 1s ease 0.3s both;
+}
+
+.hero__image-glow {
+  position: absolute;
+  width: 400px;
+  height: 400px;
+  background: radial-gradient(circle, rgba(232, 168, 23, 0.15) 0%, transparent 70%);
+  border-radius: 50%;
+  z-index: 0;
+}
+
+.hero__image img {
+  position: relative;
+  z-index: 1;
+  max-width: 420px;
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-xl);
+  animation: float 6s ease-in-out infinite;
+}
+
+@media (max-width: 968px) {
+  .hero {
+    padding: 120px 20px 60px;
+  }
+
+  .hero__content {
+    grid-template-columns: 1fr;
+    gap: 48px;
+    text-align: center;
+  }
+
+  .hero__title {
+    font-size: 2.6rem;
+  }
+
+  .hero__description {
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .hero__cta {
+    justify-content: center;
+  }
+
+  .hero__stats {
+    justify-content: center;
+  }
+
+  .hero__image img {
+    max-width: 300px;
+  }
+
+  .hero__image-glow {
+    width: 280px;
+    height: 280px;
+  }
+}
+
+@media (max-width: 480px) {
+  .hero__title {
+    font-size: 2rem;
+  }
+
+  .hero__cta {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .hero__stats {
+    gap: 16px;
+  }
+
+  .hero__stat strong {
+    font-size: 1.4rem;
+  }
+}
