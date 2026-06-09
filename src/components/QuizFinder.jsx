@@ -11,7 +11,7 @@ const steps = [
     options: [
       { value: 'normal', label: 'Normal', icon: '1', desc: 'Equilibrado, sin exceso de grasa ni resequedad' },
       { value: 'graso', label: 'Graso', icon: '2', desc: 'Tiende a verse oleoso rapidamente' },
-      { value: 'seco', label: 'Seco', icon: '3', desc: 'Se siente aspero, con frizz y puntas abiertas' },
+      { value: 'seco', label: 'Seco / Crespo', icon: '3', desc: 'Se siente aspero, con frizz y puntas abiertas' },
       { value: 'debil', label: 'Debil / Fino', icon: '4', desc: 'Se cae facilmente o se quiebra' },
     ],
   },
@@ -21,20 +21,19 @@ const steps = [
     subtitle: 'Elige tu principal preocupacion',
     options: [
       { value: 'brillo', label: 'Falta de brillo', icon: 'A', desc: 'Quiero que se vea luminoso y saludable' },
-      { value: 'caida', label: 'Caida del cabello', icon: 'B', desc: 'Noto que pierdo mas cabello de lo normal' },
+      { value: 'hidratacion', label: 'Hidratacion', icon: 'B', desc: 'Necesito rizos definidos e hidratados' },
       { value: 'frizz', label: 'Frizz y resequedad', icon: 'C', desc: 'Se esponja y no puedo controlarlo' },
-      { value: 'grasa', label: 'Exceso de grasa', icon: 'D', desc: 'Se ensucia demasiado rapido' },
+      { value: 'frescura', label: 'Frescura y limpieza', icon: 'D', desc: 'Quiero una sensacion de spa' },
     ],
   },
   {
     id: 'aroma',
     question: 'Que aroma prefieres?',
-    subtitle: 'El aroma ideal para tu rutina de cuidado',
+    subtitle: 'Tres aromas inspirados en Colombia',
     options: [
-      { value: 'miel', label: 'Miel', icon: '\u2736', desc: 'Dulce, calido y reconfortante' },
-      { value: 'romero', label: 'Romero', icon: '\u2741', desc: 'Fresco, herbal y energizante' },
-      { value: 'vainilla', label: 'Vainilla', icon: '\u2726', desc: 'Suave, cremoso y relajante' },
-      { value: 'citrico', label: 'Citrico', icon: '\u25CF', desc: 'Vibrante, fresco y revitalizante' },
+      { value: 'lino-blanco', label: 'Lino Blanco', icon: '\u2736', desc: 'Limpio, minimalista y universal' },
+      { value: 'flor-cafe', label: 'Flor de Cafe', icon: '\u2741', desc: 'Sofisticado, fino y muy colombiano' },
+      { value: 'bosque-andino', label: 'Bosque Andino', icon: '\u2618', desc: 'Verde, fresco y revitalizante' },
     ],
   },
   {
@@ -43,8 +42,8 @@ const steps = [
     subtitle: 'Esto nos ayuda a encontrar el formato ideal',
     options: [
       { value: 'viajero', label: 'Viajero frecuente', icon: '\u2708', desc: 'Necesito algo compacto y portatil' },
-      { value: 'familia', label: 'Para toda la familia', icon: '\u2665', desc: 'Buscamos una opcion para todos' },
-      { value: 'eco', label: 'Eco-consciente', icon: '\u2618', desc: 'Priorizo el cuidado del planeta' },
+      { value: 'familia', label: 'Para toda la familia', icon: '\u2665', desc: 'Buscamos una opcion para todos en casa' },
+      { value: 'hoteleria', label: 'Hoteleria / Glamping', icon: '\u2726', desc: 'Amenidad premium para huespedes' },
       { value: 'premium', label: 'Busco lo mejor', icon: '\u2605', desc: 'Quiero la formula mas completa' },
     ],
   },
@@ -54,21 +53,29 @@ function getRecommendation(answers) {
   let scores = products.map(p => ({ product: p, score: 0 }));
 
   scores.forEach(s => {
-    if (s.product.category === answers['hair-type']) s.score += 3;
-    if (s.product.aroma === answers.aroma) s.score += 2;
+    // Aroma match (strongest signal)
+    if (s.product.aroma === answers.aroma) s.score += 4;
 
-    if (answers.concern === 'brillo' && s.product.ingredients.includes('Miel')) s.score += 2;
-    if (answers.concern === 'caida' && s.product.ingredients.includes('Biotina')) s.score += 3;
-    if (answers.concern === 'caida' && s.product.ingredients.includes('Romero')) s.score += 1;
-    if (answers.concern === 'frizz' && s.product.ingredients.includes('Manteca de karité')) s.score += 3;
-    if (answers.concern === 'frizz' && s.product.ingredients.includes('Aceite de argán')) s.score += 2;
-    if (answers.concern === 'grasa' && s.product.ingredients.includes('Arcilla verde')) s.score += 3;
-    if (answers.concern === 'grasa' && s.product.ingredients.includes('Árbol de té')) s.score += 2;
+    // All products have miel, romero, curcuma — base score
+    s.score += 1;
 
-    if (answers.lifestyle === 'viajero' && s.product.id === 5) s.score += 4;
-    if (answers.lifestyle === 'familia' && s.product.id === 6) s.score += 4;
-    if (answers.lifestyle === 'premium' && s.product.price >= 32000) s.score += 2;
-    if (answers.lifestyle === 'eco') s.score += 1;
+    // Concern-based scoring
+    if (answers.concern === 'brillo' && s.product.aroma === 'lino-blanco') s.score += 2;
+    if (answers.concern === 'hidratacion' && s.product.ingredients.includes('Manteca de karite')) s.score += 3;
+    if (answers.concern === 'frizz' && s.product.ingredients.includes('Aceite de coco')) s.score += 3;
+    if (answers.concern === 'frescura' && s.product.aroma === 'bosque-andino') s.score += 3;
+
+    // Hair type scoring
+    if (answers['hair-type'] === 'normal') s.score += 1;
+    if (answers['hair-type'] === 'seco' && s.product.ingredients.includes('Manteca de karite')) s.score += 2;
+    if (answers['hair-type'] === 'graso' && s.product.aroma === 'bosque-andino') s.score += 2;
+    if (answers['hair-type'] === 'debil') s.score += 1; // all have romero+curcuma
+
+    // Lifestyle — format preference
+    if (answers.lifestyle === 'viajero' && s.product.category === 'viaje') s.score += 4;
+    if (answers.lifestyle === 'hoteleria' && s.product.category === 'viaje') s.score += 4;
+    if (answers.lifestyle === 'familia' && s.product.category === 'normal') s.score += 3;
+    if (answers.lifestyle === 'premium' && s.product.category === 'normal') s.score += 3;
   });
 
   scores.sort((a, b) => b.score - a.score);

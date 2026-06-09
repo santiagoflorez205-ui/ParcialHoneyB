@@ -215,6 +215,13 @@
   }
 }
 
+.hero__band {
+  font-size: 0.8rem;
+  color: var(--warm-gray);
+  letter-spacing: 0.5px;
+  margin-top: 12px;
+}
+
 @media (max-width: 480px) {
   .hero__title {
     font-size: 2rem;
