@@ -1,8 +1,11 @@
+import { useState } from 'react';
 import { useCart } from '../context/CartContext';
+import PaymentModal from './PaymentModal';
 import './CartDrawer.css';
 
 export default function CartDrawer() {
   const { items, isOpen, closeDrawer, removeItem, updateQuantity, totalItems, subtotal, clearCart } = useCart();
+  const [showPayment, setShowPayment] = useState(false);
 
   const formatPrice = (p) =>
     new Intl.NumberFormat('es-CO', { style: 'currency', currency: 'COP', minimumFractionDigits: 0 }).format(p);
@@ -118,7 +121,7 @@ export default function CartDrawer() {
                 </div>
               </div>
 
-              <button className="btn btn--primary cart-drawer__checkout">
+              <button className="btn btn--primary cart-drawer__checkout" onClick={() => setShowPayment(true)}>
                 Finalizar Compra
                 <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
                   <line x1="5" y1="12" x2="19" y2="12"/>
@@ -128,6 +131,8 @@ export default function CartDrawer() {
             </div>
           </>
         )}
+
+        <PaymentModal isOpen={showPayment} onClose={() => setShowPayment(false)} />
       </aside>
     </>
   );

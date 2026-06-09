@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Pago en Proceso - HoneyB</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet" />
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: 'Poppins', sans-serif;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: linear-gradient(135deg, #fdf6ec 0%, #f5e6d0 100%);
+      color: #2c1810;
+      padding: 24px;
+    }
+    .card {
+      background: #fff;
+      border-radius: 20px;
+      padding: 48px 40px;
+      max-width: 460px;
+      width: 100%;
+      text-align: center;
+      box-shadow: 0 8px 40px rgba(44,24,16,0.1);
+    }
+    .spinner {
+      width: 60px; height: 60px;
+      border: 4px solid #f5e6d0;
+      border-top-color: #e8a817;
+      border-radius: 50%;
+      animation: spin 1s linear infinite;
+      margin: 0 auto 24px;
+    }
+    @keyframes spin { to { transform: rotate(360deg); } }
+    h1 { font-size: 1.5rem; margin-bottom: 12px; }
+    p { font-size: 0.95rem; color: #6b5b50; line-height: 1.6; margin-bottom: 8px; }
+    .badge {
+      display: inline-block;
+      background: rgba(232,168,23,0.12);
+      color: #c48a0a;
+      font-size: 0.8rem;
+      font-weight: 600;
+      padding: 6px 16px;
+      border-radius: 20px;
+      margin-top: 20px;
+    }
+    .brand {
+      margin-top: 32px;
+      font-size: 0.78rem;
+      color: #a89585;
+    }
+  </style>
+</head>
+<body>
+  <div class="card">
+    <div class="spinner"></div>
+    <h1>Pago en proceso</h1>
+    <p>Tu transaccion esta siendo verificada. Este proceso puede tomar unos momentos.</p>
+    <p>No cierres esta ventana hasta recibir la confirmacion.</p>
+    <span class="badge">Sandbox / Demo</span>
+    <p class="brand">HONEY'B S.A.S. Natural Cosmetics</p>
+  </div>
+</body>
+</html>
