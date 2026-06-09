@@ -1,0 +1,130 @@
+.filter-bar {
+  background: var(--white);
+  border-radius: var(--radius-lg);
+  padding: 28px 32px;
+  box-shadow: var(--shadow-sm);
+  margin-bottom: 40px;
+  border: 1px solid rgba(212, 165, 116, 0.15);
+}
+
+.filter-bar__search {
+  position: relative;
+  display: flex;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.filter-bar__search svg {
+  position: absolute;
+  left: 16px;
+  color: var(--warm-gray);
+}
+
+.filter-bar__input {
+  width: 100%;
+  padding: 14px 44px 14px 48px;
+  border: 2px solid var(--cream-dark);
+  border-radius: var(--radius-xl);
+  font-family: 'Lora', serif;
+  font-size: 0.95rem;
+  color: var(--espresso);
+  background: var(--cream);
+  transition: all var(--transition);
+  outline: none;
+}
+
+.filter-bar__input:focus {
+  border-color: var(--honey);
+  box-shadow: 0 0 0 4px rgba(232, 168, 23, 0.1);
+}
+
+.filter-bar__input::placeholder {
+  color: var(--warm-gray);
+}
+
+.filter-bar__clear {
+  position: absolute;
+  right: 14px;
+  background: none;
+  color: var(--warm-gray);
+  padding: 4px;
+  border-radius: 50%;
+  display: flex;
+  transition: color var(--transition);
+}
+
+.filter-bar__clear:hover {
+  color: var(--espresso);
+}
+
+.filter-bar__filters {
+  display: flex;
+  gap: 32px;
+  flex-wrap: wrap;
+}
+
+.filter-bar__group {
+  flex: 1;
+  min-width: 200px;
+}
+
+.filter-bar__label {
+  display: block;
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  color: var(--warm-gray);
+  margin-bottom: 10px;
+}
+
+.filter-bar__pills {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.filter-pill {
+  padding: 8px 18px;
+  border-radius: var(--radius-xl);
+  font-size: 0.85rem;
+  font-weight: 500;
+  background: var(--cream);
+  color: var(--espresso-light);
+  border: 1px solid transparent;
+  transition: all var(--transition);
+}
+
+.filter-pill:hover {
+  border-color: var(--honey);
+  color: var(--honey-dark);
+}
+
+.filter-pill--active {
+  background: var(--honey);
+  color: var(--white);
+  box-shadow: 0 2px 10px rgba(232, 168, 23, 0.3);
+}
+
+.filter-pill--active:hover {
+  background: var(--honey-dark);
+  color: var(--white);
+}
+
+.filter-bar__count {
+  margin-top: 16px;
+  font-size: 0.85rem;
+  color: var(--warm-gray);
+  text-align: right;
+}
+
+@media (max-width: 768px) {
+  .filter-bar {
+    padding: 20px;
+  }
+
+  .filter-bar__filters {
+    flex-direction: column;
+    gap: 16px;
+  }
+}
