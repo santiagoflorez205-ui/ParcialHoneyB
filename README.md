@@ -3,7 +3,8 @@
 Aplicacion web e-commerce para **Honey'B Natural Cosmetics**, marca colombiana de shampoo solido artesanal elaborado con miel, curcuma y romero.
 
 ## Integrantes
-- Santiago Florez
+- Santiago Florez Ramos
+- Kharol Juliana Calderón Barrera
 
 ## Stack Tecnologico
 - **Framework:** React 19 (Vite)
