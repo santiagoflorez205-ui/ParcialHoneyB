@@ -61,6 +61,13 @@ const cartReducer = (state, action) => {
         ),
       };
     }
+    case 'REORDER_ITEMS': {
+      const { fromIndex, toIndex } = action.payload;
+      const reordered = [...state.items];
+      const [moved] = reordered.splice(fromIndex, 1);
+      reordered.splice(toIndex, 0, moved);
+      return { ...state, items: reordered };
+    }
     case 'CLEAR_CART':
       return { ...state, items: [] };
     case 'TOGGLE_DRAWER':
@@ -97,6 +104,10 @@ export function CartProvider({ children }) {
     dispatch({ type: 'UPDATE_QUANTITY', payload: { id, quantity } });
   }, []);
 
+  const reorderItems = useCallback((fromIndex, toIndex) => {
+    dispatch({ type: 'REORDER_ITEMS', payload: { fromIndex, toIndex } });
+  }, []);
+
   const clearCart = useCallback(() => {
     dispatch({ type: 'CLEAR_CART' });
   }, []);
@@ -125,6 +136,7 @@ export function CartProvider({ children }) {
         addItem,
         removeItem,
         updateQuantity,
+        reorderItems,
         clearCart,
         toggleDrawer,
         closeDrawer,

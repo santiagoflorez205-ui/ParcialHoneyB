@@ -1,14 +1,43 @@
-import { useState } from 'react';
+import { useState, useRef } from 'react';
 import { useCart } from '../context/CartContext';
 import PaymentModal from './PaymentModal';
 import './CartDrawer.css';
 
 export default function CartDrawer() {
-  const { items, isOpen, closeDrawer, removeItem, updateQuantity, totalItems, subtotal, clearCart } = useCart();
+  const { items, isOpen, closeDrawer, removeItem, updateQuantity, reorderItems, totalItems, subtotal, clearCart } = useCart();
   const [showPayment, setShowPayment] = useState(false);
+  const [dragIndex, setDragIndex] = useState(null);
+  const [overIndex, setOverIndex] = useState(null);
+  const dragNode = useRef(null);
 
   const formatPrice = (p) =>
     new Intl.NumberFormat('es-CO', { style: 'currency', currency: 'COP', minimumFractionDigits: 0 }).format(p);
+
+  const handleDragStart = (e, index) => {
+    setDragIndex(index);
+    dragNode.current = e.target.closest('.cart-item');
+    e.dataTransfer.effectAllowed = 'move';
+    // Make the drag image slightly transparent
+    setTimeout(() => {
+      if (dragNode.current) dragNode.current.classList.add('cart-item--dragging');
+    }, 0);
+  };
+
+  const handleDragOver = (e, index) => {
+    e.preventDefault();
+    e.dataTransfer.dropEffect = 'move';
+    if (index !== overIndex) setOverIndex(index);
+  };
+
+  const handleDragEnd = () => {
+    if (dragIndex !== null && overIndex !== null && dragIndex !== overIndex) {
+      reorderItems(dragIndex, overIndex);
+    }
+    if (dragNode.current) dragNode.current.classList.remove('cart-item--dragging');
+    setDragIndex(null);
+    setOverIndex(null);
+    dragNode.current = null;
+  };
 
   return (
     <>
@@ -50,9 +79,35 @@ export default function CartDrawer() {
           </div>
         ) : (
           <>
+            {items.length > 1 && (
+              <div className="cart-drawer__drag-hint">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                  <polyline points="7 8 12 3 17 8"/>
+                  <polyline points="7 16 12 21 17 16"/>
+                </svg>
+                Arrastra para reordenar
+              </div>
+            )}
             <div className="cart-drawer__items">
-              {items.map(item => (
-                <div key={item.id} className="cart-item">
+              {items.map((item, index) => (
+                <div
+                  key={item.id}
+                  className={`cart-item ${overIndex === index && dragIndex !== index ? 'cart-item--over' : ''}`}
+                  draggable
+                  onDragStart={(e) => handleDragStart(e, index)}
+                  onDragOver={(e) => handleDragOver(e, index)}
+                  onDragEnd={handleDragEnd}
+                >
+                  <div className="cart-item__drag-handle" aria-label="Arrastrar para reordenar">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+                      <circle cx="9" cy="6" r="1.5"/>
+                      <circle cx="15" cy="6" r="1.5"/>
+                      <circle cx="9" cy="12" r="1.5"/>
+                      <circle cx="15" cy="12" r="1.5"/>
+                      <circle cx="9" cy="18" r="1.5"/>
+                      <circle cx="15" cy="18" r="1.5"/>
+                    </svg>
+                  </div>
                   <img src={item.image} alt={item.name} className="cart-item__image" />
                   <div className="cart-item__info">
                     <h4 className="cart-item__name">{item.name}</h4>
