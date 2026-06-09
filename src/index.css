@@ -32,6 +32,8 @@
 
 html {
   scroll-behavior: smooth;
+  /* Compensa el header fijo: al navegar por el menu el titulo no queda tapado */
+  scroll-padding-top: 90px;
 }
 
 body {

@@ -1,13 +1,31 @@
-import { useState, useMemo } from 'react';
+import { useState, useMemo, useEffect } from 'react';
 import products from '../data/products';
 import FilterBar from './FilterBar';
 import ProductCard from './ProductCard';
 import './ProductSection.css';
 
+const FILTERS_KEY = 'honeybee-filters';
+
+function loadFilters() {
+  try {
+    const saved = localStorage.getItem(FILTERS_KEY);
+    if (saved) return JSON.parse(saved);
+  } catch { /* ignore */ }
+  return {};
+}
+
 export default function ProductSection() {
-  const [category, setCategory] = useState('todos');
-  const [aroma, setAroma] = useState('todos');
-  const [search, setSearch] = useState('');
+  const savedFilters = loadFilters();
+  const [category, setCategory] = useState(savedFilters.category || 'todos');
+  const [aroma, setAroma] = useState(savedFilters.aroma || 'todos');
+  const [search, setSearch] = useState(savedFilters.search || '');
+
+  /* Persistencia de filtros: sobreviven a la recarga (igual que el carrito) */
+  useEffect(() => {
+    try {
+      localStorage.setItem(FILTERS_KEY, JSON.stringify({ category, aroma, search }));
+    } catch { /* ignore */ }
+  }, [category, aroma, search]);
 
   /* Filtro en vivo: se reordena/oculta en tiempo real sin recarga */
   const filtered = useMemo(() => {
